@@ -67,44 +67,82 @@ class Reviewer(Mentor):
         else:
             return 'Ошибка'
  
-best_student = Student('Ruoy', 'Eman', 'your_gender')
+best_student = Student('Helena', 'Carter', 'f')
 best_student.courses_in_progress += ['Python']
 best_student.courses_in_progress += ['git']
-best_student.courses_in_progress += ['C++']
-best_student.finished_courses += ['IZO']
+best_student.finished_courses += ['Exel']
 
 worst_student = Student('Jack', 'Daniels', 'm')
 worst_student.courses_in_progress += ['Python']
  
-cool_mentor = Lecturer('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
-cool_mentor.courses_attached += ['C++']
-some_mentor = Reviewer('Jon', 'Caneghem')
-some_mentor.courses_attached += ['Python']
-some_mentor.courses_attached += ['C++']
+lecturer1 = Lecturer('Jon', 'Caneghem')
+lecturer1.courses_attached += ['Python']
+lecturer1.courses_attached += ['C++']
+
+lecturer2 = Lecturer('Abraham', 'VanHelsing')
+lecturer2.courses_attached += ['Python']
+lecturer2.courses_attached += ['C++']
+
+reviewer1 = Reviewer('Charles', 'Darwin')
+reviewer1.courses_attached += ['Python']
+reviewer1.courses_attached += ['git']
+
+reviewer2 = Reviewer('Kurt', 'Cobein')
+reviewer2.courses_attached += ['Python']
  
-some_mentor.rate_hw(best_student, 'Python', 10)
-some_mentor.rate_hw(best_student, 'Python', 10)
-some_mentor.rate_hw(best_student, 'Python', 10)
+reviewer1.rate_hw(best_student, 'Python', 10)
+reviewer1.rate_hw(best_student, 'Python', 10)
+reviewer1.rate_hw(best_student, 'Python', 10)
+reviewer1.rate_hw(best_student, 'git', 8)
 
-some_mentor.rate_hw(worst_student, 'Python', 1)
+reviewer1.rate_hw(worst_student, 'Python', 1)
+reviewer1.rate_hw(worst_student, 'Python', 3)
 
+worst_student.rate_lect(lecturer1, 'Python', 8)
+worst_student.rate_lect(lecturer1, 'Python', 9)
+best_student.rate_lect(lecturer1, 'Python', 10)
+best_student.rate_lect(lecturer1, 'Python', 10)
 
-# some_mentor.rate_hw(best_student, 'C++', 5)
-# some_mentor.rate_hw(best_student, 'C++', 5)
-# some_mentor.rate_hw(best_student, 'C++', 1)
+worst_student.rate_lect(lecturer2, 'Python', 6)
+best_student.rate_lect(lecturer2, 'Python', 7)
+print(best_student)
+print('\n')
+print(lecturer1)
+print('\n')
+print(reviewer1)
+print('\n')
 
-# best_student.rate_lect(cool_mentor, 'Python', 1)
-best_student.rate_lect(cool_mentor, 'Python', 10)
+if best_student > worst_student:
+    print(f'{best_student.name} {best_student.surname} studies better than {worst_student.name} {worst_student.surname}')
+elif best_student < worst_student:
+    print(f'{best_student.name} {best_student.surname} studies worse than {worst_student.name} {worst_student.surname}')
+elif best_student == worst_student:
+    print(f'{best_student.name} {best_student.surname} studies the same way as {worst_student.name} {worst_student.surname}')
 
- 
-# print(best_student.grades)
-# print(cool_mentor.grades)
-# print(best_student)
-# print(some_mentor)
-# print(cool_mentor)
-# print (cool_mentor.avg_rate())
-print (best_student < worst_student)
+def students_avg_rate_for_course(students_list: list, course_name: str) -> float:
+    sum_rate = 0
+    len_rate = 0
+    for student in students_list: 
+        if isinstance(student, Student):      
+            if course_name in student.grades.keys():
+                sum_rate += sum(student.grades[course_name])
+                len_rate += len(student.grades[course_name])
+        else:
+            return'Ошибка ввода'
+    return(sum_rate/len_rate)
 
+def lecturers_avg_rate_for_course(lecturers_list: list, course_name: str) -> float:
+    sum_rate = 0
+    len_rate = 0
+    for lecturer in lecturers_list: 
+        if isinstance(lecturer, Lecturer):      
+            if course_name in lecturer.grades.keys():
+                sum_rate += sum(lecturer.grades[course_name])
+                len_rate += len(lecturer.grades[course_name])
+        else:
+            return'Ошибка ввода'
+    return(sum_rate/len_rate)
 
+print(students_avg_rate_for_course([best_student, worst_student],'Python'))
+print(lecturers_avg_rate_for_course([lecturer1, lecturer2],'Python'))
 
